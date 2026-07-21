@@ -17,7 +17,7 @@ Date: 18 July 2026*/
 
 @RestController
 @RequestMapping("/api/inventory")
-public class InventoryController {
+public class InventoryController{
     private final IInventoryService inventoryService;
 
     @Autowired
