@@ -7,8 +7,13 @@ package za.ac.cput.redesigned_store_inventory_manager.domain;
  Date: 21 June 2026
  */
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Supplier {
 
+    @Id
     private String supplierId;
     private String supplierName;
     private String contactDetails;

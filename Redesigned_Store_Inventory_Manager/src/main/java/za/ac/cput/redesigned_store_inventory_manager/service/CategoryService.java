@@ -12,7 +12,7 @@ Author: Jayden Avontuur (222032278)
 Date: 18 July 2026*/
 
 @Service
-public class CategoryService implements ICategoryService{
+public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
@@ -27,7 +27,7 @@ public class CategoryService implements ICategoryService{
 
     @Override
     public Optional<Category> findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return Optional.empty();
         return categoryRepository.findById(id);
     }
 
@@ -47,6 +47,4 @@ public class CategoryService implements ICategoryService{
         if (id == null) return false;
         return categoryRepository.existsById(id);
     }
-
-
 }

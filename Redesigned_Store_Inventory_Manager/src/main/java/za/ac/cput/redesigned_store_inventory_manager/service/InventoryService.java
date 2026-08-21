@@ -27,7 +27,7 @@ public class InventoryService implements IInventoryService {
 
     @Override
     public Optional<Inventory> findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return Optional.empty();
         return inventoryRepository.findById(id);
     }
 
@@ -47,6 +47,4 @@ public class InventoryService implements IInventoryService {
         if (id == null) return false;
         return inventoryRepository.existsById(id);
     }
-
-
 }

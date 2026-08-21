@@ -6,36 +6,40 @@ import za.ac.cput.redesigned_store_inventory_manager.domain.Store;
 import za.ac.cput.redesigned_store_inventory_manager.service.StoreService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/v1/employee")
-
+@RequestMapping(path = "/api/v1/stores")
 public class StoreController {
     private final StoreService storeService;
 
     @Autowired
-    public StoreController(StoreService storeService){
-            this.storeService=storeService;
-    }
-    @GetMapping("/getAll")
-    public List<Store> getStore(){
-        return storeService.getAll();
-    }
-    @PostMapping("/save")
-    public void save(@RequestBody Store store){
-        storeService.create(store);
-    }
-    @DeleteMapping("delete")
-    public void delete(@RequestParam String StoreId){
-      storeService.delete(StoreId);
-    }
-    @GetMapping("/read")
-    public void read(@RequestParam String StoreId){
-        storeService.read(StoreId);
-    }
-    @PutMapping("/update")
-    public void update(Store store){
-        storeService.update(store);
+    public StoreController(StoreService storeService) {
+        this.storeService = storeService;
     }
 
+    @GetMapping("/getAll")
+    public List<Store> getAll() {
+        return storeService.findAll();
+    }
+
+    @PostMapping("/save")
+    public Store save(@RequestBody Store store) {
+        return storeService.save(store);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam String storeId) {
+        storeService.deleteById(storeId);
+    }
+
+    @GetMapping("/read")
+    public Optional<Store> read(@RequestParam String storeId) {
+        return storeService.findById(storeId);
+    }
+
+    @PutMapping("/update")
+    public Store update(@RequestBody Store store) {
+        return storeService.save(store);
+    }
 }

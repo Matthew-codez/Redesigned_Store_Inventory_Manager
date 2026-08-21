@@ -1,35 +1,45 @@
 package za.ac.cput.redesigned_store_inventory_manager.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.redesigned_store_inventory_manager.domain.Product;
 import za.ac.cput.redesigned_store_inventory_manager.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
+@RestController
+@RequestMapping(path = "/api/v1/products")
 public class ProductController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService){
-        this.productService=productService;
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    public List<Product>getProduct(){
-        return productService.getAll();
+    @GetMapping("/getAll")
+    public List<Product> getAll() {
+        return productService.findAll();
     }
+
     @PostMapping("/save")
-    public void create(@RequestBody Product product){
-        productService.create(product);
+    public Product save(@RequestBody Product product) {
+        return productService.save(product);
     }
+
     @GetMapping("/read")
-    public void read(@RequestParam String productId){
-        productService.read(productId);
+    public Optional<Product> read(@RequestParam String productId) {
+        return productService.findById(productId);
     }
+
     @PutMapping("/update")
-    public void update(@RequestBody Product product){
-        productService.update(product);
+    public Product update(@RequestBody Product product) {
+        return productService.save(product);
     }
+
     @DeleteMapping("/delete")
-    public void delete(@RequestParam String productId){
-        productService.delete(productId);
+    public void delete(@RequestParam String productId) {
+        productService.deleteById(productId);
     }
 }
