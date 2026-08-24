@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.redesigned_store_inventory_manager.domain.Order;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, String> {
 }
