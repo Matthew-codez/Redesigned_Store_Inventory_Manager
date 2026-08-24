@@ -1,7 +1,7 @@
 package za.ac.cput.redesigned_store_inventory_manager.controller;
 
-/* Customer.java
-Customer POJO
+/* OrderController.java
+Order REST controller
 Author: Matthew Ferreira (230048870)
 Date: 19 July 2026*/
 
@@ -15,7 +15,8 @@ import za.ac.cput.redesigned_store_inventory_manager.service.IOrderService;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("api/orders")
+@RestController
+@RequestMapping("/api/orders")
 public class OrderController {
     private final IOrderService orderService;
 
@@ -25,15 +26,15 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllCustomers() {
+    public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.findAll();
         return ResponseEntity.ok(orders);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id){
-        Optional<Order> orders = orderService.findById(id);
-        return orders.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @GetMapping("/{orderNum}")
+    public ResponseEntity<Order> getOrderById(@PathVariable String orderNum){
+        Optional<Order> order = orderService.findById(orderNum);
+        return order.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -45,12 +46,12 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable long id){
-        if (!orderService.existsById(id)){
+    @DeleteMapping("/{orderNum}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable String orderNum){
+        if (!orderService.existsById(orderNum)){
             return ResponseEntity.notFound().build();
         }
-        orderService.deleteById(id);
+        orderService.deleteById(orderNum);
         return ResponseEntity.noContent().build();
     }
 }

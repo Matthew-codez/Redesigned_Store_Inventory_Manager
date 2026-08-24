@@ -1,7 +1,7 @@
 package za.ac.cput.redesigned_store_inventory_manager.service;
 
-/* Customer.java
-Customer POJO
+/* OrderService.java
+Order service implementation
 Author: Matthew Ferreira (230048870)
 Date: 12 July 2026*/
 
@@ -26,9 +26,9 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Optional<Order> findById(Long id) {
-        if (id == null) return Optional.empty();
-        return orderRepository.findById(id);
+    public Optional<Order> findById(String orderNum) {
+        if (orderNum == null) return Optional.empty();
+        return orderRepository.findById(orderNum);
     }
 
     @Override
@@ -37,13 +37,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (id == null) return;
-        orderRepository.deleteById(id);
+    public void deleteById(String orderNum) {
+        if (orderNum == null) return;
+        orderRepository.deleteById(orderNum);
     }
+
     @Override
-    public boolean existsById(Long id) {
-        if (id == null) return false;
-        return orderRepository.existsById(id);
+    public boolean existsById(String orderNum) {
+        if (orderNum == null) return false;
+        return orderRepository.existsById(orderNum);
     }
 }
