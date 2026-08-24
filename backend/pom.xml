@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>za.ac.cput</groupId>
-    <artifactId>Redesigned_Store_Inventory_Manager</artifactId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Redesigned_Store_Inventory_Manager</name>
     <description>Redesigned_Store_Inventory_Manager</description>
