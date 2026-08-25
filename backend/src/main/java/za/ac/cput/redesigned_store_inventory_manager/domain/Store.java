@@ -4,14 +4,21 @@ Author: Zacharia Dipudi (230700659)
 Date: 21 June 2026*/
 package za.ac.cput.redesigned_store_inventory_manager.domain;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Store {
+
+    @Id
     private String storeId;
     private String storeName;
     private String storePhoneNumber;
     private String storeLocation;
+
+    @ManyToOne
     private Product product;
 
-    private Store(){
+    protected Store(){
 
     }
 
@@ -123,5 +130,3 @@ public class Store {
         }
     }
 }
-
-

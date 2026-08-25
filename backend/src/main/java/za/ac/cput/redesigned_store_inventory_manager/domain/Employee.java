@@ -7,18 +7,35 @@ package za.ac.cput.redesigned_store_inventory_manager.domain;
  Date: 21 June 2026
  */
 
+import jakarta.persistence.*;
+
+@Entity
 public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String employeeId;
     private String employeeName;
     private String position;
     private double salary;
+    private String username;
+    private String password;
+
+    protected Employee() {}
 
     private Employee(Builder builder) {
         this.employeeId = builder.employeeId;
         this.employeeName = builder.employeeName;
         this.position = builder.position;
         this.salary = builder.salary;
+        this.username = builder.username;
+        this.password = builder.password;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getEmployeeId() {
@@ -37,13 +54,23 @@ public class Employee {
         return salary;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeId='" + employeeId + '\'' +
+                "id=" + id +
+                ", employeeId='" + employeeId + '\'' +
                 ", employeeName='" + employeeName + '\'' +
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
+                ", username='" + username + '\'' +
                 '}';
     }
 
@@ -53,6 +80,8 @@ public class Employee {
         private String employeeName;
         private String position;
         private double salary;
+        private String username;
+        private String password;
 
         public Builder setEmployeeId(String employeeId) {
             this.employeeId = employeeId;
@@ -71,6 +100,16 @@ public class Employee {
 
         public Builder setSalary(double salary) {
             this.salary = salary;
+            return this;
+        }
+
+        public Builder setUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
             return this;
         }
 

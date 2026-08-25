@@ -8,9 +8,9 @@ package za.ac.cput.redesigned_store_inventory_manager.repository;
 */
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import za.ac.cput.redesigned_store_inventory_manager.domain.Employee;
+import java.util.Optional;
 
-@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    Optional<Employee> findByUsername(String username);
 }
