@@ -107,6 +107,51 @@ public class ClientApp {
         }
     }
 
+    private static final String CUSTOMER_AUTH_URL = "http://localhost:8080/api/customer-auth";
+    private static final String ORDER_URL = "http://localhost:8080/api/orders";
+
+    public boolean authenticateCustomer(String username, String password) {
+        try {
+            String json = mapper.writeValueAsString(new LoginRequest(username, password));
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(CUSTOMER_AUTH_URL + "/login"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString()).statusCode() == 200;
+        } catch (Exception e) { e.printStackTrace(); return false; }
+    }
+
+    public boolean registerCustomer(String firstName, String surname, String email, String username, String password) {
+        try {
+            String json = String.format(
+                    "{\"firstName\":\"%s\",\"surname\":\"%s\",\"email\":\"%s\",\"username\":\"%s\",\"password\":\"%s\"}",
+                    firstName, surname, email, username, password);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(CUSTOMER_AUTH_URL + "/register"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            int code = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).statusCode();
+            return code == 200 || code == 201;
+        } catch (Exception e) { e.printStackTrace(); return false; }
+    }
+
+    private static final String PURCHASE_URL = "http://localhost:8080/api/purchase";
+
+    public boolean purchase(String customerUsername, Long inventoryId, int quantity) throws Exception {
+        String json = String.format(
+                "{\"customerId\":\"%s\",\"inventoryId\":%d,\"quantity\":%d}",
+                customerUsername, inventoryId, quantity);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(PURCHASE_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.statusCode() == 200;
+    }
+
     public static void main(String[] args) {
         ClientApp client = new ClientApp();
         new LoginGUI(client).setGUI();
