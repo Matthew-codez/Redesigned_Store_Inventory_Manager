@@ -6,12 +6,15 @@ Author: Matthew Ferreira (230048870)
 Date: 21 June 2026*/
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Customer {
     @Id
-    private String customerId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long customerId;
     private String firstName;
     private String surname;
     private String email;
@@ -23,7 +26,7 @@ public class Customer {
 
     protected Customer() {}
 
-    public String getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
@@ -59,7 +62,7 @@ public class Customer {
         return country;
     }
 
-    private Customer (Builder builder){
+    private Customer(Builder builder) {
         this.customerId = builder.customerId;
         this.firstName = builder.firstName;
         this.surname = builder.surname;
@@ -71,8 +74,8 @@ public class Customer {
         this.country = builder.country;
     }
 
-    public static class Builder{
-        private String customerId;
+    public static class Builder {
+        private Long customerId;
         private String firstName;
         private String surname;
         private String email;
@@ -82,7 +85,7 @@ public class Customer {
         private String postalCode;
         private String country;
 
-        public Builder setCustomerId(String customerId) {
+        public Builder setCustomerId(Long customerId) {
             this.customerId = customerId;
             return this;
         }
@@ -127,7 +130,7 @@ public class Customer {
             return this;
         }
 
-        public Builder copy(Customer customer){
+        public Builder copy(Customer customer) {
             this.customerId = customer.getCustomerId();
             this.firstName = customer.getFirstName();
             this.surname = customer.getSurname();
@@ -140,9 +143,8 @@ public class Customer {
             return this;
         }
 
-        public Customer build(){
+        public Customer build() {
             return new Customer(this);
         }
     }
-
 }

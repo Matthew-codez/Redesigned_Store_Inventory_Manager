@@ -1,7 +1,9 @@
 package views;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.Customer;
 import domain.Inventory;
+import domain.Order;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,10 +15,18 @@ import java.util.List;
  *
  * @author Jayden Avontuur
  */
+
+/**
+ * Matthew Ferreira
+ * 230048870
+ * Order/Customer
+ */
+
 public class ClientApp {
 
     private static final String AUTH_URL = "http://localhost:8080/api/auth";
     private static final String INVENTORY_URL = "http://localhost:8080/api/inventory";
+    private static final String ORDER_URL = "http://localhost:8000/api/orders";
 
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
@@ -105,6 +115,66 @@ public class ClientApp {
             this.email = email;
             this.password = password;
         }
+    }
+
+    public List<Order> getAllOrders() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ORDER_URL))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(),
+        mapper.getTypeFactory().constructCollectionType(List.class, Order.class));
+    }
+
+    public Order createOrder(Order order) throws Exception {
+        String json = mapper.writeValueAsString(order);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ORDER_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(), Order.class);
+        }
+
+    public void deleteOrder(String orderNum) throws Exception{
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ORDER_URL + "/" + orderNum))
+                .DELETE()
+                .build();
+        httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+    }
+
+    private static final String CUSTOMER_URL = "http://localhost:8080/api/customers";
+
+    public List<Customer> getAllCustomers() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CUSTOMER_URL))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(),
+                mapper.getTypeFactory().constructCollectionType(List.class, Customer.class));
+    }
+
+    public Customer createCustomer(Customer customer) throws Exception {
+        String json = mapper.writeValueAsString(customer);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CUSTOMER_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(), Customer.class);
+    }
+
+    public void deleteCustomer(Long id) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CUSTOMER_URL + "/" + id))
+                .DELETE()
+                .build();
+        httpClient.send(request, HttpResponse.BodyHandlers.discarding());
     }
 
     public static void main(String[] args) {
