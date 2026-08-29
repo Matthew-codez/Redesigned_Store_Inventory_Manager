@@ -46,9 +46,9 @@ public class ShopGUI extends JFrame {
         bottom.add(new JLabel("Quantity:"));
         bottom.add(spinnerQuantity);
         JButton btnBuy = new JButton("Buy");
-        JButton btnRefresh = new JButton("Refresh");
+        JButton btnBackToLogin = new JButton("Back to Login");
         bottom.add(btnBuy);
-        bottom.add(btnRefresh);
+        bottom.add(btnBackToLogin);
 
         setLayout(new BorderLayout());
         add(top, BorderLayout.NORTH);
@@ -57,7 +57,10 @@ public class ShopGUI extends JFrame {
 
         comboCategory.addActionListener(e -> applyFilter());
         btnBuy.addActionListener(e -> buySelected());
-        btnRefresh.addActionListener(e -> loadInventory());
+        btnBackToLogin.addActionListener(e -> {
+            dispose();
+            new LoginGUI(client).setGUI();
+        });
 
         setSize(700, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
