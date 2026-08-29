@@ -18,7 +18,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
     private JPanel pnlNorth, pnlCenter, pnlSouth;
     private JTable table;
     private DefaultTableModel tableModel;
-    private JButton btnAdd, btnDelete, btnRefresh, btnRegisterEmployee;
+    private JButton btnAdd, btnDelete, btnBackToLogin, btnRegisterEmployee;
     private JLabel lblTitle;
     private ClientApp client;
 
@@ -37,7 +37,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
         table = new JTable(tableModel);
         btnAdd = new JButton("Add");
         btnDelete = new JButton("Delete");
-        btnRefresh = new JButton("Refresh");
+        btnBackToLogin = new JButton("Back to Login");
         btnRegisterEmployee = new JButton("Register New Employee");
         lblTitle = new JLabel("Inventory Management");
     }
@@ -52,7 +52,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
         pnlCenter.add(new JScrollPane(table), BorderLayout.CENTER);
         pnlSouth.add(btnAdd);
         pnlSouth.add(btnDelete);
-        pnlSouth.add(btnRefresh);
+        pnlSouth.add(btnBackToLogin);
 
         this.add(pnlNorth, BorderLayout.NORTH);
         this.add(pnlCenter, BorderLayout.CENTER);
@@ -60,7 +60,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
 
         btnAdd.addActionListener(this);
         btnDelete.addActionListener(this);
-        btnRefresh.addActionListener(this);
+        btnBackToLogin.addActionListener(this);
         btnRegisterEmployee.addActionListener(this);
 
         this.setSize(800, 450);
@@ -99,9 +99,9 @@ public class InventoryGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnRefresh) {
-            loadInventory();
-
+        if (e.getSource() == btnBackToLogin) {
+            dispose();
+            new LoginGUI(client).setGUI();
         } else if (e.getSource() == btnAdd) {
             new InventoryFormDialog(this, client, this::loadInventory).setVisible(true);
 
@@ -124,6 +124,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
             }.execute();
 
         } else if (e.getSource() == btnRegisterEmployee) {
+            dispose();
             new RegisterGUI(client).setGUI();
         }
     }
