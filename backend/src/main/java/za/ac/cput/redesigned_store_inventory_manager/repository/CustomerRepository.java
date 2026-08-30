@@ -12,6 +12,6 @@ import za.ac.cput.redesigned_store_inventory_manager.domain.Customer;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, String> {
     Optional<Customer> findByUsername(String username);
 }
