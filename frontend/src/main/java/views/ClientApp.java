@@ -1,6 +1,7 @@
 package views;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.Customer;
 import domain.Inventory;
 
 import java.net.URI;
@@ -150,6 +151,17 @@ public class ClientApp {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return response.statusCode() == 200;
+    }
+
+    public Customer createCustomer(Customer customer) throws Exception {
+        String json = mapper.writeValueAsString(customer);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/customers"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(), Customer.class);
     }
 
     public static void main(String[] args) {
