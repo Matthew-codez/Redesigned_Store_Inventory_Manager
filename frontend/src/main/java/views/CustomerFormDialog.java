@@ -61,16 +61,15 @@ public class CustomerFormDialog extends JDialog {
     }
 
     private void save() {
-        Customer customer = new Customer.Builder()
-                .setFirstName(txtFirstName.getText().trim())
-                .setSurname(txtSurname.getText().trim())
-                .setEmail(txtEmail.getText().trim())
-                .setPhoneNumber(txtPhoneNumber.getText().trim())
-                .setAddress(txtAddress.getText().trim())
-                .setCity(txtCity.getText().trim())
-                .setPostalCode(txtPostalCode.getText().trim())
-                .setCountry(txtCountry.getText().trim())
-                .build();
+        Customer customer = new Customer();
+        customer.setFirstName(txtFirstName.getText().trim());
+        customer.setSurname(txtSurname.getText().trim());
+        customer.setEmail(txtEmail.getText().trim());
+        customer.setPhoneNumber(txtPhoneNumber.getText().trim());
+        customer.setAddress(txtAddress.getText().trim());
+        customer.setCity(txtCity.getText().trim());
+        customer.setPostalCode(txtPostalCode.getText().trim());
+        customer.setCountry(txtCountry.getText().trim());
 
         new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws Exception {

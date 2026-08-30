@@ -57,14 +57,13 @@ public class OrderFormDialog extends JDialog {
 
     private void save() {
         try {
-            Order order = new Order.Builder()
-                    .setOrderNum(txtOrderNum.getText().trim())
-                    .setOrderDate(txtOrderDate.getText().trim())
-                    .setDeliveryDate(txtDeliveryDate.getText().trim())
-                    .setTotalAmount(Double.parseDouble(txtTotalAmount.getText().trim()))
-                    .setStatus(txtStatus.getText().trim())
-                    .setItem(txtItem.getText().trim())
-                    .build();
+            Order order = new Order();
+            order.setOrderNum(txtOrderNum.getText().trim());
+            order.setOrderDate(txtOrderDate.getText().trim());
+            order.setDeliveryDate(txtDeliveryDate.getText().trim());
+            order.setTotalAmount(Double.parseDouble(txtTotalAmount.getText().trim()));
+            order.setStatus(txtStatus.getText().trim());
+            order.setItem(txtItem.getText().trim());
 
             new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws Exception {
