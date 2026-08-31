@@ -78,6 +78,14 @@ public class ClientApp {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 500 && response.body().contains("Unique index or primary key violation")) {
+            throw new Exception("That Product ID already exists. Please use a different Product ID.");
+        }
+        if (response.statusCode() != 200 && response.statusCode() != 201) {
+            throw new Exception("Failed to add inventory item (server returned " + response.statusCode() + ").");
+        }
+
         return mapper.readValue(response.body(), Inventory.class);
     }
 

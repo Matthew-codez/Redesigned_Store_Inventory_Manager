@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class CustomerRegisterGUI extends JFrame implements ActionListener {
 
-    private JTextField txtFirstName, txtSurname, txtEmail, txtUsername;
+    private JTextField txtUsername;
     private JPasswordField txtPassword;
     private JButton btnRegister, btnBack;
     private ClientApp client;
@@ -15,9 +15,6 @@ public class CustomerRegisterGUI extends JFrame implements ActionListener {
     public CustomerRegisterGUI(ClientApp client) {
         super("Customer Sign Up");
         this.client = client;
-        txtFirstName = new JTextField(20);
-        txtSurname = new JTextField(20);
-        txtEmail = new JTextField(20);
         txtUsername = new JTextField(20);
         txtPassword = new JPasswordField(20);
         btnRegister = new JButton("Sign Up");
@@ -25,10 +22,7 @@ public class CustomerRegisterGUI extends JFrame implements ActionListener {
     }
 
     public void setGUI() {
-        JPanel form = new JPanel(new GridLayout(5, 2, 5, 5));
-        form.add(new JLabel("First Name:")); form.add(txtFirstName);
-        form.add(new JLabel("Surname:")); form.add(txtSurname);
-        form.add(new JLabel("Email:")); form.add(txtEmail);
+        JPanel form = new JPanel(new GridLayout(2, 2, 5, 5));
         form.add(new JLabel("Username:")); form.add(txtUsername);
         form.add(new JLabel("Password:")); form.add(txtPassword);
 
@@ -42,7 +36,7 @@ public class CustomerRegisterGUI extends JFrame implements ActionListener {
         btnRegister.addActionListener(this);
         btnBack.addActionListener(this);
 
-        setSize(400, 300);
+        setSize(400, 175);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -51,10 +45,15 @@ public class CustomerRegisterGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnRegister) {
-            boolean ok = client.registerCustomer(
-                    txtFirstName.getText().trim(), txtSurname.getText().trim(),
-                    txtEmail.getText().trim(), txtUsername.getText().trim(),
-                    new String(txtPassword.getPassword()).trim());
+            String username = txtUsername.getText().trim();
+            String password = new String(txtPassword.getPassword()).trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter username and password.");
+                return;
+            }
+
+            boolean ok = client.registerCustomer(username, username, username, username, password);
             if (ok) {
                 JOptionPane.showMessageDialog(this, "Registered! Please log in.");
                 dispose();
