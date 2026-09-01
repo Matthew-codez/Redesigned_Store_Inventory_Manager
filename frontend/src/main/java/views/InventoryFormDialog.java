@@ -8,7 +8,7 @@ import java.awt.*;
 public class InventoryFormDialog extends JDialog {
 
     private JTextField txtProductId, txtProductName, txtSupplierId, txtCategoryName,
-            txtQuantity, txtUnitPrice, txtLocation, txtRestockedDate;
+            txtQuantity, txtUnitPrice, txtLocation;
     private JButton btnSave, btnCancel;
     private ClientApp client;
     private Runnable onSuccess;
@@ -18,7 +18,7 @@ public class InventoryFormDialog extends JDialog {
         this.client = client;
         this.onSuccess = onSuccess;
 
-        JPanel form = new JPanel(new GridLayout(8, 2, 5, 5));
+        JPanel form = new JPanel(new GridLayout(7, 2, 5, 5));
 
         txtProductId = new JTextField();
         txtProductName = new JTextField();
@@ -27,7 +27,6 @@ public class InventoryFormDialog extends JDialog {
         txtQuantity = new JTextField();
         txtUnitPrice = new JTextField();
         txtLocation = new JTextField();
-        txtRestockedDate = new JTextField("yyyy-MM-dd");
 
         form.add(new JLabel("Product ID:")); form.add(txtProductId);
         form.add(new JLabel("Product Name:")); form.add(txtProductName);
@@ -36,7 +35,6 @@ public class InventoryFormDialog extends JDialog {
         form.add(new JLabel("Quantity In Stock:")); form.add(txtQuantity);
         form.add(new JLabel("Unit Price:")); form.add(txtUnitPrice);
         form.add(new JLabel("Location:")); form.add(txtLocation);
-        form.add(new JLabel("Last Restocked Date:")); form.add(txtRestockedDate);
 
         JPanel buttons = new JPanel();
         btnSave = new JButton("Save");
@@ -47,7 +45,7 @@ public class InventoryFormDialog extends JDialog {
         this.setLayout(new BorderLayout());
         this.add(form, BorderLayout.CENTER);
         this.add(buttons, BorderLayout.SOUTH);
-        this.setSize(400, 350);
+        this.setSize(400, 320);
         this.setLocationRelativeTo(parent);
 
         btnSave.addActionListener(e -> save());
@@ -72,7 +70,6 @@ public class InventoryFormDialog extends JDialog {
             inventory.setQuantityInStock(Integer.parseInt(txtQuantity.getText().trim()));
             inventory.setUnitPrice(Double.parseDouble(txtUnitPrice.getText().trim()));
             inventory.setLocation(txtLocation.getText().trim());
-            inventory.setLastRestockedDate(txtRestockedDate.getText().trim());
 
             new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws Exception {

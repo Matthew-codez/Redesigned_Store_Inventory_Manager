@@ -18,7 +18,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
     private JPanel pnlNorth, pnlCenter, pnlSouth;
     private JTable table;
     private DefaultTableModel tableModel;
-    private JButton btnAdd, btnDelete, btnRefresh, btnRegisterEmployee;
+    private JButton btnAdd, btnDelete, btnRefresh, btnRegisterEmployee, btnViewOrders;
     private JLabel lblTitle;
     private ClientApp client;
 
@@ -39,6 +39,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
         btnDelete = new JButton("Delete");
         btnRefresh = new JButton("Refresh");
         btnRegisterEmployee = new JButton("Register New Employee");
+        btnViewOrders = new JButton("View Orders");
         lblTitle = new JLabel("Inventory Management");
     }
 
@@ -49,6 +50,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
 
         pnlNorth.add(lblTitle);
         pnlNorth.add(btnRegisterEmployee);
+        pnlNorth.add(btnViewOrders);
         pnlCenter.add(new JScrollPane(table), BorderLayout.CENTER);
         pnlSouth.add(btnAdd);
         pnlSouth.add(btnDelete);
@@ -62,6 +64,7 @@ public class InventoryGUI extends JFrame implements ActionListener {
         btnDelete.addActionListener(this);
         btnRefresh.addActionListener(this);
         btnRegisterEmployee.addActionListener(this);
+        btnViewOrders.addActionListener(this);
 
         this.setSize(900, 450);
         this.setVisible(true);
@@ -126,6 +129,8 @@ public class InventoryGUI extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btnRegisterEmployee) {
             new RegisterGUI(client).setGUI();
+        } else if (e.getSource() == btnViewOrders) {
+            new OrderGUI(client).setGUI();
         }
     }
 }
